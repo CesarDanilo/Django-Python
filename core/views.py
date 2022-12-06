@@ -2,7 +2,7 @@ from django.shortcuts import render
 from .forms import ContatoForm
 from django.contrib import messages
 # Create your views here.
-from .forms import ProdutoModelForm
+from .forms import ProdutoModelForm, ClientesModelsForm
 
 
 def index(request):
@@ -43,3 +43,21 @@ def produto(request):
     }
 
     return render(request, 'produto.html', context)
+
+
+def cliente(request):
+    if str(request.method) == 'POST':
+        form = ClientesModelsForm(request.POST)
+        if form.is_valid():
+            form.save(commit=True)
+            messages.success(request, 'Cadastrado com sucesso')
+            form = ClientesModelsForm()
+        else:
+            messages.error(request, 'erro no cadastro')
+    else:
+        form = ClientesModelsForm()
+
+    context = {
+        'form': form
+    }
+    return render(request, 'cliente.html', context)

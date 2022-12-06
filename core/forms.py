@@ -1,6 +1,6 @@
 from django import forms
 from django.core.mail.message import EmailMessage
-from .models import Produto
+from .models import Produto, Cliente
 
 
 class ContatoForm(forms.Form):
@@ -36,3 +36,9 @@ class ProdutoModelForm(forms.ModelForm):
     class Meta:
         model = Produto
         fields = ['nome', 'preco', 'estoque', 'imagem']
+
+
+class ClientesModelsForm(forms.ModelForm):
+    class Meta:
+        model = Cliente
+        fields = ['nome', 'idade', 'sexo', 'email']

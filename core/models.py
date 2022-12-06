@@ -31,3 +31,21 @@ def produto_pre_save(signal, instance, sender, **kwargs):
 
 
 signals.pre_save.connect(produto_pre_save, sender=Produto)
+
+
+class Cliente(Base):
+    nome = models.CharField('Nome', max_length=100)
+    idade = models.IntegerField('Idade')
+    sexo = models.CharField('Sexo', max_length=100)
+    email = models.EmailField('E-mail', max_length=100)
+    slug = models.SlugField('Slug', max_length=100, blank=True, editable=False)
+
+    def __str__(self):
+        return self.nome
+
+
+def Cliente_pre_save(signal, instance, sender, **kwargs):
+    instance.slug = slugify(instance.nome)
+
+
+signals.pre_save.connect(Cliente_pre_save, sender=Cliente)
